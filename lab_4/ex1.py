@@ -62,7 +62,7 @@ print(theta)
 
 x_sim = np.linspace(1, 25)
 # y_sim = np.log(x_sim.dot(theta[1])  + theta[0])
-y_sim = 1/(1 + pow(np.e, x_sim.dot(theta[1]) + theta[0]))
+y_sim = 1/(1 + pow(np.e, - (x_sim.dot(theta[1]) + theta[0])))
 plt.scatter(X, y)
 plt.axvline(border, c='r')
 plt.plot(x_sim, y_sim, c='g')
