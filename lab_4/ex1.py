@@ -30,6 +30,42 @@ theta = np.array([0, 0], dtype=np.float32)
 
 # optimization loop
 
+max_iter = 10000
+eps = 0.00001
+alpha = 0.05
+prev_cost = 99
 
+
+for i in range(max_iter):
+    h_x = 1/(1 + np.exp(-theta[0] - theta[1]*X))
+
+    crossentropy = -y*np.log(h_x+0.00001) - (1-y)*np.log(1-h_x+0.00001)
+    cost = np.sum(crossentropy) / X.shape[0]
+
+    theta_deriv = np.array([sum(h_x-y)/len(y), sum((h_x-y)*X)], dtype=np.float32)
+    # theta0_deriv = sum(h - y) / len(y), theta1_deriv = sum((h-y)*X)
+
+    # theta_derivs = sum((h_x-y) @ X) / X.shape[0]
+    # theta_derivs.shape = [len(theta_derivs), 1]
+
+    theta = theta - alpha*theta_deriv
+
+    print("epoch ", str(i+1), ", cost ", cost)
+
+    if np.abs(prev_cost - cost) < eps:
+        break
+
+    prev_cost = cost
+
+border = -theta[0]/theta[1]
+print(theta)
+
+x_sim = np.linspace(1, 25)
+# y_sim = np.log(x_sim.dot(theta[1])  + theta[0])
+y_sim = 1/(1 + pow(np.e, x_sim.dot(theta[1]) + theta[0]))
+plt.scatter(X, y)
+plt.axvline(border, c='r')
+plt.plot(x_sim, y_sim, c='g')
+plt.show()
 
 
