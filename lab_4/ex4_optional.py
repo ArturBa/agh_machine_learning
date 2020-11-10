@@ -21,6 +21,7 @@ def main():
     example_idx = 156
     print(training_labels[example_idx])
     plt.imshow(training_data[example_idx])
+    plt.show()
 
     # training data must be vectorized
     # from [n_examples, height, width] to [n_examples, n_features]
@@ -41,9 +42,6 @@ def main():
         # optimize theta
         h_x = 1 / (1 + np.exp(-theta.T@X))
 
-        crossentropy = -y*np.log(h_x+0.00001) - (1-y)*np.log(1-h_x+0.00001)
-        [cost] = np.sum(crossentropy, axis=1) / X.shape[1]
-
         theta_derivs = sum((h_x-y) @ X.T) / X.shape[1]
         theta_derivs.shape = [len(theta_derivs), 1]
 
@@ -61,14 +59,15 @@ def main():
     h = 1.0 / (1 + np.exp(-theta.T @ X))
     y_pred = np.round(h.flatten()) # and classify it
 
+    print(y)
     # calculate TP...
-    TP = np.sum(np.logical_and(y_pred == 1, y == 1))
+    TP = np.sum(np.logical_and(y_pred == 1, y == 1)) 
     FP = np.sum(np.logical_and(y_pred == 1, y == 0))
     TN = np.sum(np.logical_and(y_pred == 0, y == 0))
     FN = np.sum(np.logical_and(y_pred == 0, y == 1))
     print(TP, FP, TN, FN)
 
-    # and the sensitivity and positive predictivity
+    # and the sensitivity and positive predictively
     se = TP / (TP+FN)
     pp = TP / (TP+FP)
 
