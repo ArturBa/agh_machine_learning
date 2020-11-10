@@ -39,9 +39,16 @@ def main():
 
     while iter >= 0:
         # optimize theta
+        h_x = 1 / (1 + np.exp(-theta.T@X))
 
+        crossentropy = -y*np.log(h_x+0.00001) - (1-y)*np.log(1-h_x+0.00001)
+        [cost] = np.sum(crossentropy, axis=1) / X.shape[1]
+
+        theta_derivs = sum((h_x-y) @ X.T) / X.shape[1]
+        theta_derivs.shape = [len(theta_derivs), 1]
+
+        theta = theta - alpha*theta_derivs
         iter -= 1
-        pass
 
     # now we need to read test set and reshape it similarly to training set
     test_data, test_labels = read_data_set('./t10k-images-idx3-ubyte', './t10k-labels-idx1-ubyte', 10000)
@@ -55,16 +62,17 @@ def main():
     y_pred = np.round(h.flatten()) # and classify it
 
     # calculate TP...
-    # TP =
-    # FP =
-    # TN =
-    # FN =
+    TP = np.sum(np.logical_and(y_pred == 1, y == 1))
+    FP = np.sum(np.logical_and(y_pred == 1, y == 0))
+    TN = np.sum(np.logical_and(y_pred == 0, y == 0))
+    FN = np.sum(np.logical_and(y_pred == 0, y == 1))
+    print(TP, FP, TN, FN)
 
     # and the sensitivity and positive predictivity
-    # se = TP / (TP+FN)
-    # pp = TP / (TP+FP)
+    se = TP / (TP+FN)
+    pp = TP / (TP+FP)
 
-    # print('se: {}, pp: {}'.format(se, pp))
+    print('se: {}, pp: {}'.format(se, pp))
 
 
 def read_data_set(images_path, labels_path, num_images):

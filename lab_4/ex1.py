@@ -43,11 +43,6 @@ for i in range(max_iter):
     cost = np.sum(crossentropy) / X.shape[0]
 
     theta_deriv = np.array([sum(h_x-y)/len(y), sum((h_x-y)*X)], dtype=np.float32)
-    # theta0_deriv = sum(h - y) / len(y), theta1_deriv = sum((h-y)*X)
-
-    # theta_derivs = sum((h_x-y) @ X) / X.shape[0]
-    # theta_derivs.shape = [len(theta_derivs), 1]
-
     theta = theta - alpha*theta_deriv
 
     print("epoch ", str(i+1), ", cost ", cost)
