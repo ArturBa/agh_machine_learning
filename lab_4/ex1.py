@@ -61,5 +61,3 @@ plt.scatter(X, y)
 plt.axvline(border, c='r')
 plt.plot(x_sim, y_sim, c='g')
 plt.show()
-
-

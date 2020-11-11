@@ -21,7 +21,7 @@ def main():
     example_idx = 156
     print(training_labels[example_idx])
     plt.imshow(training_data[example_idx])
-    plt.show()
+    # plt.show()
 
     # training data must be vectorized
     # from [n_examples, height, width] to [n_examples, n_features]
@@ -59,7 +59,6 @@ def main():
     h = 1.0 / (1 + np.exp(-theta.T @ X))
     y_pred = np.round(h.flatten()) # and classify it
 
-    print(y)
     # calculate TP...
     TP = np.sum(np.logical_and(y_pred == 1, y == 1)) 
     FP = np.sum(np.logical_and(y_pred == 1, y == 0))
