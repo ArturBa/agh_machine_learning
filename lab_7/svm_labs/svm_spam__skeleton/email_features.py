@@ -55,7 +55,7 @@ def email_features(word_indices: List[int]) -> np.ndarray:
     # =========================================================================
 
     for i in word_indices:
-        response[i] = 1
+        response[i-1] = 1
 
     return np.array([response])
 
